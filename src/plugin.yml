@@ -1,0 +1,12 @@
+main: ru.empireprojekt.empiredata.EmpireData
+name: EmpireData
+version: 0.1
+author: RatushevRoman
+api-version: 1.13
+commands:
+  emdreload:
+  emd:
+  trading:
+  empiredata:
+    usage: |
+      /edreload - Перезагружает плагин
