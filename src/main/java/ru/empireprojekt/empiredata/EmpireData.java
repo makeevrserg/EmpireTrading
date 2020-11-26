@@ -9,6 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,19 +30,8 @@ public class EmpireData extends JavaPlugin {
         public Double currentValue;
         public Thread thread;
         public int lastItem = 0;
-        public int maxAmount = 200, curAmount = 0; // TODO: Убрать значение maxAmount
-        public int burnDelay = 200, burnAmount = 1; // TODO: Убрать значение burnDelay, burnAmount
-
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                if (curAmount > 0) {
-                    curAmount--;
-                }
-            }
-        };
-        Timer timer = new Timer("timer");
-
+        public int maxAmount, curAmount;
+        public int burnDelay, burnAmount;
     }
 
     private Map<String, TradingItem> tradingItems;
@@ -184,6 +174,12 @@ public class EmpireData extends JavaPlugin {
             tradingItem.dataList = items.getConfigurationSection(item).getString("default_trade_data").split(",");
             tradingItem.currentValue = Double.parseDouble(tradingItem.dataList[0]);
             tradingItem.thread = CreateThread(tradingItem.name);
+
+            tradingItem.maxAmount = items.getConfigurationSection(item).getInt("max_amount", 0);
+            tradingItem.curAmount = items.getConfigurationSection(item).getInt("cur_amount", 0);
+            tradingItem.burnDelay = items.getConfigurationSection(item).getInt("burn_delay", 0);
+            tradingItem.burnAmount = items.getConfigurationSection(item).getInt("burn_amount", 0);
+            z
             if (createDB(tradingItem.name)) {
                 tradingItems.put(tradingItem.name, tradingItem);
                 tradingItem.thread.start();
