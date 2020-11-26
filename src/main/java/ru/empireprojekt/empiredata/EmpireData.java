@@ -179,7 +179,7 @@ public class EmpireData extends JavaPlugin {
             tradingItem.curAmount = items.getConfigurationSection(item).getInt("cur_amount", 0);
             tradingItem.burnDelay = items.getConfigurationSection(item).getInt("burn_delay", 0);
             tradingItem.burnAmount = items.getConfigurationSection(item).getInt("burn_amount", 0);
-            z
+
             if (createDB(tradingItem.name)) {
                 tradingItems.put(tradingItem.name, tradingItem);
                 tradingItem.thread.start();
@@ -298,7 +298,7 @@ public class EmpireData extends JavaPlugin {
             return true;
         }
         SaveConfig();
-        dataManager.updateConfig(playerManager.SavePlayers(dataManager.getConfig()));
+        dataManager.updateConfig(playerManager.SavePlayers(dataManager.getPlayerData()));
         dataManager.saveConfig();
         if (sender != null)
             sender.sendMessage(ChatColor.GREEN + "Сохранено");
@@ -313,7 +313,7 @@ public class EmpireData extends JavaPlugin {
         }
         sender.sendMessage(ChatColor.GREEN + "Перезагружаем EmpireItems");
         SaveConfig();
-        dataManager.updateConfig(playerManager.SavePlayers(dataManager.getConfig()));
+        dataManager.updateConfig(playerManager.SavePlayers(dataManager.getPlayerData()));
         dataManager.saveConfig();
         stopThreads();
         disconnectDatabase();

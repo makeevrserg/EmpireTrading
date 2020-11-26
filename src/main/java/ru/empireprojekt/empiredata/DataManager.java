@@ -12,8 +12,9 @@ import java.io.InputStreamReader;
 public class DataManager {
     private EmpireData plugin;
     private File configFiles = null;
+    private File playerDataFiles = null;
     private FileConfiguration dataConfig = null;
-
+    private FileConfiguration playerData = null;
 
 
     public DataManager(EmpireData plugin) {
@@ -24,7 +25,13 @@ public class DataManager {
     public void reloadConfig() {
         if (this.configFiles == null)
             this.configFiles = new File(this.plugin.getDataFolder(),"config.yml");
+
+        if (this.playerData == null)
+            this.playerDataFiles = new File(this.plugin.getDataFolder(),"playerData.yml");
+
         dataConfig = YamlConfiguration.loadConfiguration(configFiles);
+        playerData = YamlConfiguration.loadConfiguration(playerDataFiles);
+
         InputStream defaultStream = this.plugin.getResource("config.yml");
         if (defaultStream != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
@@ -39,10 +46,16 @@ public class DataManager {
         return this.dataConfig;
     }
 
+    public FileConfiguration getPlayerData() {
+        if (this.playerData == null)
+            reloadConfig();
+        return this.playerData;
+    }
+
     private void LoadFiles() {
 
         configFiles = new File(this.plugin.getDataFolder() + "\\config.yml");
-
+        playerDataFiles = new File(this.plugin.getDataFolder(),"\\playerData.yml");
 
     }
 
