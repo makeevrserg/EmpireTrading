@@ -15,6 +15,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class EmpireData extends JavaPlugin {
 
@@ -27,6 +29,19 @@ public class EmpireData extends JavaPlugin {
         public Double currentValue;
         public Thread thread;
         public int lastItem = 0;
+        public int maxAmount = 200, curAmount = 0; // TODO: Убрать значение maxAmount
+        public int burnDelay = 200, burnAmount = 1; // TODO: Убрать значение burnDelay, burnAmount
+
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                if (curAmount > 0) {
+                    curAmount--;
+                }
+            }
+        };
+        Timer timer = new Timer("timer");
+
     }
 
     private Map<String, TradingItem> tradingItems;
